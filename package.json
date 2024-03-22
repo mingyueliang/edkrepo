@@ -1,0 +1,121 @@
+{
+  "name": "edkrepo-plugin",
+  "displayName": "edkrepo-plugin",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:edkrepo"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "edkrepo.manifest.refresh",
+        "title": "refresh",
+        "icon":{
+          "dark": "src/media/lightRefresh.svg",
+          "light": "src/media/lightRefresh.svg"
+        }
+      },
+      {
+        "command": "edkrepo.status",
+        "title": "status",
+        "icon": {
+          "dark": "",
+          "light": ""
+        }
+      },
+      {
+        "command": "edkrepo.combo",
+        "title": "combo",
+        "icon":{
+          "dark": "",
+          "light": ""
+        }
+      },
+      {
+        "command": "edkrepo.clone",
+        "title": "clone",
+        "icon":{
+          "dark": "",
+          "light": ""
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "edkrepo",
+          "icon": "src/media/edkrepo.png",
+          "title": "multiple repository"
+        }
+      ]
+    },
+    "views": {
+      "edkrepo" :[
+        {
+          "id": "edkrepo.manifest",
+          "name": "Projects"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "edkrepo.view1",
+        "contents": "this is welcome content",
+        "when": "ture"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "edkrepo.manifest.refresh",
+          "when": "view == edkrepo.manifest",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "edkrepo.status",
+          "when": "view == edkrepo.manifest",
+          "group": ""
+        },
+        {
+          "command": "edkrepo.combo",
+          "when": "view == edkrepo.manifest",
+          "group": ""
+        },
+        {
+          "command": "edkrepo.clone",
+          "when": "view == edkrepo.manifest",
+          "group": ""
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
