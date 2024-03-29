@@ -9,92 +9,36 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onView:edkrepo"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "edkrepo.manifest.refresh",
-        "title": "refresh",
-        "icon":{
-          "dark": "src/media/lightRefresh.svg",
-          "light": "src/media/lightRefresh.svg"
-        }
+        "command": "edkrepo.menus.clone",
+        "title": "Clone repository by edkrepo"
       },
       {
-        "command": "edkrepo.status",
-        "title": "status",
-        "icon": {
-          "dark": "",
-          "light": ""
-        }
+        "command": "edkrepo.menus.status",
+        "title": "edkrepo status"
       },
       {
-        "command": "edkrepo.combo",
-        "title": "combo",
-        "icon":{
-          "dark": "",
-          "light": ""
-        }
-      },
-      {
-        "command": "edkrepo.clone",
-        "title": "clone",
-        "icon":{
-          "dark": "",
-          "light": ""
-        }
-      }
-    ],
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "edkrepo",
-          "icon": "src/media/edkrepo.png",
-          "title": "multiple repository"
-        }
-      ]
-    },
-    "views": {
-      "edkrepo" :[
-        {
-          "id": "edkrepo.manifest",
-          "name": "Projects"
-        }
-      ]
-    },
-    "viewsWelcome": [
-      {
-        "view": "edkrepo.view1",
-        "contents": "this is welcome content",
-        "when": "ture"
+        "command": "edkrepo.menus.combo",
+        "title": "edkrepo.combo"
       }
     ],
     "menus": {
-      "view/title": [
+      "explorer/context": [
         {
-          "command": "edkrepo.manifest.refresh",
-          "when": "view == edkrepo.manifest",
-          "group": "navigation"
-        }
-      ],
-      "view/item/context": [
-        {
-          "command": "edkrepo.status",
-          "when": "view == edkrepo.manifest",
-          "group": ""
+          "command": "edkrepo.menus.clone",
+          "group": "group1"
         },
         {
-          "command": "edkrepo.combo",
-          "when": "view == edkrepo.manifest",
-          "group": ""
+          "command": "edkrepo.menus.status",
+          "group": "group1"
         },
         {
-          "command": "edkrepo.clone",
-          "when": "view == edkrepo.manifest",
-          "group": ""
+          "command": "edkrepo.menus.combo",
+          "group": "group1"
         }
       ]
     }

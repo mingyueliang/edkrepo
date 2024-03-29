@@ -5,9 +5,9 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	require('./manifest')(context);
-	require('./refreshProjects')(context);
-	require('./repoStatus')(context);
+	require('./statusCommand')(context);
+	require('./cloneCommand')(context);
+	require('./comboCommand')(context);
 }
 
 // This method is called when your extension is deactivated
