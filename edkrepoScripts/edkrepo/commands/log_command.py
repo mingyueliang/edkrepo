@@ -42,6 +42,11 @@ class LogCommand(EdkrepoCommand):
                      'positional' : False,
                      'required' : False,
                      'help-text' : arguments.ONELINE_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         return metadata
 
     def run_command(self, args, config):
@@ -52,8 +57,8 @@ class LogCommand(EdkrepoCommand):
                 print("Error: \'{}\' is not an integer".format(args.number))
                 return
 
-        workspace_path = get_workspace_path()
-        manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        manifest = get_workspace_manifest(args)
 
         sorted_commit_list = sort_commits(manifest, workspace_path, args.number)
 

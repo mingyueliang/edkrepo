@@ -17,3 +17,5 @@ FORCE_HELP = 'Without this flag untracked files are listed but not deleted'
 QUIET_HELP = 'Don\'t list files as they are deleted'
 DIRS_HELP = 'Remove directories in addition to files'
 INCLUDE_IGNORED = 'Removes all untracked files'
+WORKSPACE_HELP = ('The destination for the newly created workspace, this must be an empty directory.\n'
+                  'A value of "." indicates the current working directory.')

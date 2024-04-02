@@ -8,6 +8,12 @@ export function activate(context: vscode.ExtensionContext) {
 	require('./statusCommand')(context);
 	require('./cloneCommand')(context);
 	require('./comboCommand')(context);
+	require('./cleanCommand')(context);
+	require('./resetCommand')(context);
+	require('./maintenanceCommand')(context);
+	require('./logCommand')(context);
+	// require('./updateCommand')(context);
+	require('./sparseCommand')(context);
 }
 
 // This method is called when your extension is deactivated

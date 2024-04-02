@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import path, * as syspath from 'path';
-import * as fs from 'fs';
 import { runPythonScript } from './common';
 
 

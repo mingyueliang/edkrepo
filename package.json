@@ -24,6 +24,30 @@
       {
         "command": "edkrepo.menus.combo",
         "title": "edkrepo.combo"
+      },
+      {
+        "command": "edkrepo.menus.clean",
+        "title": "edkrepo clean"
+      },
+      {
+        "command": "edkrepo.menus.reset",
+        "title": "edkrepo reset"
+      },
+      {
+        "command": "edkrepo.menus.maintenance",
+        "title": "edkrepo maintenance"
+      },
+      {
+        "command": "edkrepo.menus.log",
+        "title": "edkrepo log"
+      },
+      {
+        "command": "edkrepo.menus.update",
+        "title": "edkrepo update"
+      },
+      {
+        "command": "edkrepo.menus.sparse",
+        "title": "edkrepo sparse"
       }
     ],
     "menus": {
@@ -38,6 +62,30 @@
         },
         {
           "command": "edkrepo.menus.combo",
+          "group": "group1"
+        },
+        {
+          "command": "edkrepo.menus.clean",
+          "group": "group1"
+        },
+        {
+          "command": "edkrepo.menus.reset",
+          "group": "group1"
+        },
+        {
+          "command": "edkrepo.menus.maintenance",
+          "group": "group1"
+        },
+        {
+          "command": "edkrepo.menus.log",
+          "group": "group1"
+        },
+        {
+          "command": "edkrepo.menus.update",
+          "group": "group1"
+        },
+        {
+          "command": "edkrpeo.menus.sparse",
           "group": "group1"
         }
       ]

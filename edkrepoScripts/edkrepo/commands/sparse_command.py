@@ -37,12 +37,17 @@ class SparseCommand(EdkrepoCommand):
                      'positional': False,
                      'required': False,
                      'help-text': arguments.DISABLE_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         return metadata
 
     def run_command(self, args, config):
         # Collect workspace/repo data
-        workspace_path = get_workspace_path()
-        manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        manifest = get_workspace_manifest(args)
         current_combo = manifest.general_config.current_combo
         repo_list = manifest.get_repo_sources(current_combo)
         sparse_settings = manifest.sparse_settings

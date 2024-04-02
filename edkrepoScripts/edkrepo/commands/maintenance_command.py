@@ -38,6 +38,11 @@ class MaintenanceCommande(EdkrepoCommand):
                      'positional' : False,
                      'required' : False,
                      'help-text' : arguments.NO_GC})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         return metadata
 
     def run_command(self, args, config):
@@ -56,14 +61,14 @@ class MaintenanceCommande(EdkrepoCommand):
         # git reflog --expire, git gc, git remote prune origin
         if not args.no_gc:
             try:
-                workspace_path = get_workspace_path()
+                workspace_path = get_workspace_path(args)
             except EdkrepoWorkspaceInvalidException:
                 workspace_path = None
                 ui_functions.print_error_msg(humble.NO_WOKKSPACE, header = False)
                 print()
 
             if workspace_path:
-                manifest = get_workspace_manifest()
+                manifest = get_workspace_manifest(args)
                 repos_to_maintain = manifest.get_repo_sources(manifest.general_config.current_combo)
                 for repo_to_maintain in repos_to_maintain:
                     local_repo_path = os.path.join(workspace_path, repo_to_maintain.root)

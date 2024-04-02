@@ -47,11 +47,16 @@ class CleanCommand(EdkrepoCommand):
                      'positional' : False,
                      'required' : False,
                      'help-text' : arguments.INCLUDE_IGNORED})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': arguments.WORKSPACE_HELP})
         return metadata
 
     def run_command(self, args, config):
-        workspace_path = get_workspace_path()
-        manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        manifest = get_workspace_manifest(args)
         manifest_config = manifest.general_config
         repo_sources_to_clean = manifest.get_repo_sources(manifest_config.current_combo)
         for repo_to_clean in repo_sources_to_clean:
