@@ -49,6 +49,11 @@ class ListPinsCommand(EdkrepoCommand):
                      'nargs' : 1,
                      'action' : 'store',
                      'help-text' : arguments.LIST_PINS_PROJECT_DESCRIPTION})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         args.append(SourceManifestRepoArgument)
         return metadata
 
@@ -59,7 +64,7 @@ class ListPinsCommand(EdkrepoCommand):
             separator = '\n'
         cfg, user_cfg, conflicts = list_available_manifest_repos(config['cfg_file'], config['user_cfg_file'])
         try:
-            manifest = get_workspace_manifest()
+            manifest = get_workspace_manifest(args)
             pull_workspace_manifest_repo(manifest, config['cfg_file'], config['user_cfg_file'], args.source_manifest_repo, False)
             src_manifest_repo = find_source_manifest_repo(manifest, config['cfg_file'], config['user_cfg_file'], args.source_manifest_repo)
             if src_manifest_repo in cfg:

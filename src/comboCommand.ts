@@ -1,12 +1,16 @@
 import * as vscode from 'vscode';
 import path, * as syspath from 'path';
-import { runPythonScript } from './common';
-
+import { runPythonScript, logger, PythonScriptPath } from './common';
 
 
 
 let StatusPanel = new Map();
 
+
+/**
+ * Allows users to view all available combos for their existing workspace as well as what branches are used by each combo. 
+ * When using Git Bash the currently checked out combo is highlighted in green. This command must be run from within a workspace.
+ */
 module.exports = function (context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('edkrepo.menus.combo', async (uri: vscode.Uri) => {
         const currentPath = uri.fsPath;
@@ -28,15 +32,24 @@ module.exports = function (context: vscode.ExtensionContext) {
                 }
             );
             StatusPanel.set(currentDirName, panel);
-            
+            // const logger = vscode.window.createOutputChannel('logChannel');
             // Call python script 
-            runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), ['combo', uri.fsPath])
-            .then(
-                stdout => panel.webview.html= getWebviewHtml(context, stdout)
-            )
-            .catch(
-                error => console.log(error)
-            );
+            runPythonScript(PythonScriptPath, ['combo', uri.fsPath], logger);
+            // .then(
+            //     stdout => {
+            //         logger.dispose();
+            //         // panel.webview.html= getWebviewHtml(context, stdout);
+            //         // const poc = vscode.window.createOutputChannel("combo");
+            //         // poc.clear();
+            //         // poc.append(stdout);
+            //         // poc.show();
+            //     }
+            // )
+            // .catch(
+            //     error => {
+            //         logger.dispose();
+            //     }
+            // );
 
             // Listen for when the panel disposed
             // This happens when the user closes the panel or when the panel is closed programmatically

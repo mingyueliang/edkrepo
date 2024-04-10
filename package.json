@@ -14,6 +14,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "edkrepo.menus.manifest",
+        "title": "edkrepo manifest"
+      },
+      {
         "command": "edkrepo.menus.clone",
         "title": "Clone repository by edkrepo"
       },
@@ -48,45 +52,136 @@
       {
         "command": "edkrepo.menus.sparse",
         "title": "edkrepo sparse"
+      },
+      {
+        "command": "edkrepo.menus.checkout",
+        "title": "edkrepo checkout"
+      },
+      {
+        "command": "edkrepo.menus.listpins",
+        "title": "edkrepo list-pins"
+      },
+      {
+        "command": "edkrepo.menus.selfcheck",
+        "title": "edkrepo self-check"
+      },
+      {
+        "command": "edkrepo.menus.sync",
+        "title": "edkrepo sync"
+      },
+      {
+        "command": "edkrepo.menus.update_manifest_repo",
+        "title": "edkrepo update_manifest_repo"
+      },
+      {
+        "command": "edkrepo.menus.squash",
+        "title": "edkrepo squash"
+      },
+      {
+        "command": "edkrepo.clone",
+        "title": "edkrepo clone"
+      },
+      {
+        "command": "edkrepo.manifest",
+        "title": "edkrepo manifest"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "edkrepoTool",
+        "label": "edkrepo"
       }
     ],
     "menus": {
       "explorer/context": [
         {
+          "command": "edkrepo.menus.manifest",
+          "group": "group1",
+          "when": "explorerResourceIsFolder"
+        },
+        {
           "command": "edkrepo.menus.clone",
-          "group": "group1"
+          "group": "group1",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.status",
-          "group": "group1"
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.combo",
-          "group": "group1"
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.clean",
-          "group": "group1"
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.reset",
-          "group": "group1"
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.maintenance",
-          "group": "group1"
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "edkrepo.menus.log",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.sparse",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.checkout",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.listpins",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.selfcheck",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.sync",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.update_manifest_repo",
           "group": "group1"
         },
         {
-          "command": "edkrepo.menus.update",
-          "group": "group1"
+          "command": "edkrepo.menus.squash",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
         },
         {
-          "command": "edkrpeo.menus.sparse",
-          "group": "group1"
+          "submenu": "edkrepoTool",
+          "group": "group",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "edkrepoTool": [
+        {
+          "command": "edkrepo.clone",
+          "group": "navigation"
+        },
+        {
+          "command": "edkrepo.manifest",
+          "group": "navigation"
         }
       ]
     }

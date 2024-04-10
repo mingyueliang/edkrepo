@@ -1,6 +1,6 @@
 import path, { resolve } from 'path';
 import * as vscode from 'vscode';
-import { callPythonScript, runPythonScript, trimString } from './common';
+import { PythonScriptPath, callPythonScript, logger, runPythonScript, trimString } from './common';
 import { stdout } from 'process';
 import { rejects } from 'assert';
 
@@ -9,7 +9,7 @@ let webviewPanel = new Map();
 
 module.exports = function (context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('edkrepo.menus.clone', (uri: vscode.Uri) => {
-        vscode.window.showInformationMessage(`uri: ${uri.fsPath}`);
+        // vscode.window.showInformationMessage(`uri: ${uri.fsPath}`);
 
         createWebviewPanel(context, uri.fsPath);
     }));
@@ -21,7 +21,7 @@ module.exports = function (context: vscode.ExtensionContext) {
  * @param context 
  * @returns html
  */
-function getWebviewContent(context: vscode.ExtensionContext,) {
+function getWebviewContent() {
     return (
         `
         <!DOCTYPE html>
@@ -30,7 +30,11 @@ function getWebviewContent(context: vscode.ExtensionContext,) {
                 <meta charset="utf-8">
                 <title>repos</title>
                 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
-                <style></style>
+                <style>
+                    ul li:hover{
+                        cursor: pointer;
+                    }
+                </style>
             </head>
             <body>
                 <div id="manifest">
@@ -47,6 +51,7 @@ function getWebviewContent(context: vscode.ExtensionContext,) {
                         for (let i=0; i< message.length; i++) {
                             var li = document.createElement('li')
                             li.setAttribute('id', 'project')
+                            li.setAttribute('title', 'Click to clone the project')
                             li.innerText = message[i];
                             ul.appendChild(li)
                         };
@@ -72,44 +77,40 @@ function createWebviewPanel(context: vscode.ExtensionContext, uri: string) {
     if (webviewPanel.get("Projects")) {
         webviewPanel.get('Projects').reveal(column);
     } else {
-
-        
         // const data = execSync(`py -3 ${path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py')} manifest`).toString();
         // console.log(data.substring(data.indexOf('Projects:') + 9).trim().split('\n'));
         // const Projects = data.substring(data.indexOf('Projects:') + 9).trim().split('\n');
-        vscode.window.showInputBox(
-            {
-                password:false,
-                ignoreFocusOut:true,
-                placeHolder: 'Press Enter to confirm input or Escape cancel',
-                prompt: `
-                usage: edkrepo manifest [-h] [-a] [--performance] [-v] [-c]
+        // vscode.window.showInputBox(
+        //     {
+        //         password:false,
+        //         ignoreFocusOut:true,
+        //         placeHolder: 'Press Enter to confirm input or Escape cancel',
+        //         prompt: `
+        //         usage: edkrepo manifest [-h] [-a] [--performance] [-v] [-c]
 
-                Lists the available projects.
+        //         Lists the available projects.
                 
-                optional arguments:
-                  -h, --help      show this help message and exit
-                  -a, --archived  Include a listing of archived projects.
-                  --performance   Displays performance timing data for successful commands
-                  -v, --verbose   Increases command verbosity
-                  -c, --color     Force color output (useful with 'less -r')
-                `
-            }
-        ).then(args => {
+        //         optional arguments:
+        //           -h, --help      show this help message and exit
+        //           -a, --archived  Include a listing of archived projects.
+        //           --performance   Displays performance timing data for successful commands
+        //           -v, --verbose   Increases command verbosity
+        //           -c, --color     Force color output (useful with 'less -r')
+        //         `
+        //     }
+        // ).then(args => {
+            // const logger = vscode.window.createOutputChannel('logChannel');
             let manifestCommand = ['manifest'];
-            if (args !== undefined && args !== '') {
-                manifestCommand = manifestCommand.concat(args.split(' '));
-            }
-            if (manifestCommand.indexOf('-h') !== -1) {
-                runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), manifestCommand)
+            // if (args !== undefined && args !== '') {
+            //     manifestCommand = manifestCommand.concat(args.split(' '));
+            // }
+            // if (manifestCommand.indexOf('-h') !== -1) {
+            //     runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), manifestCommand, logger);
+            // } else {
+                // vscode.window.showInformationMessage("Executing edkrepo manifest command...");
+                runPythonScript(PythonScriptPath, manifestCommand, logger)
                 .then(stdout => {
-                    vscode.window.showInformationMessage(stdout);
-                });
-            } else {
-                vscode.window.showInformationMessage("Executing edkrepo manifest command...");
-                runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), manifestCommand)
-                .then(stdout => {
-                    vscode.window.showInformationMessage(stdout);
+                    // vscode.window.showInformationMessage(stdout);
                     const panel = vscode.window.createWebviewPanel(
                         'Projects',
                         'Projects',
@@ -122,7 +123,7 @@ function createWebviewPanel(context: vscode.ExtensionContext, uri: string) {
                     webviewPanel.set('Projects', panel);
                     const Projects = stdout.substring(stdout.indexOf('Projects:') + 9).trim().split('\n');
                     panel.webview.postMessage(Projects);
-                    panel.webview.html = getWebviewContent(context);
+                    panel.webview.html = getWebviewContent();
 
                     // vscode recive message from webview
                     panel.webview.onDidReceiveMessage((project: string) => {
@@ -189,30 +190,19 @@ function createWebviewPanel(context: vscode.ExtensionContext, uri: string) {
                             }else {
                                 command = command.concat([path.join(uri, trimString(project)), trimString(project)]);
                             }
-                            runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), command)
-                            .then(stdout => {
-                                if (stdout !== undefined) {
-                                    vscode.window.showInformationMessage(stdout);
-                                }
-                            })
-                            .catch(stderr => {
-                                vscode.window.showInformationMessage(stderr);
-                            });
-
+                            runPythonScript(PythonScriptPath, command, logger);
                         });
                     });
                     // Listen for when the panel disposed
                     // This happens when the user closes the panel or when the panel is closed programmatically
                     panel.onDidDispose(() => dispose(panel, 'Projects'), null, []);
-
                 })
                 .catch(stderr => {
-                    // vscode.window.showInformationMessage(stderr);
                     console.log(stderr);
                 });
             }
-        });
-    }
+    //     });
+    // }
 }
 
 

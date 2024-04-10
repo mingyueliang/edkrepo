@@ -76,13 +76,18 @@ class SyncCommand(EdkrepoCommand):
                      'positional' : False,
                      'required' : False,
                      'help-text' : arguments.OVERRIDE_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         args.append(SubmoduleSkipArgument)
         args.append(SourceManifestRepoArgument)
         return metadata
 
     def run_command(self, args, config):
-        workspace_path = get_workspace_path()
-        initial_manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        initial_manifest = get_workspace_manifest(args)
         current_combo = initial_manifest.general_config.current_combo
         initial_sources = initial_manifest.get_repo_sources(current_combo)
         initial_hooks = initial_manifest.repo_hooks
@@ -98,9 +103,9 @@ class SyncCommand(EdkrepoCommand):
 
         cfg_manifest_repos, user_cfg_manifest_repos, conflicts = list_available_manifest_repos(config['cfg_file'], config['user_cfg_file'])
         if source_global_manifest_repo in cfg_manifest_repos:
-            verify_single_manifest(config['cfg_file'], source_global_manifest_repo, get_workspace_manifest_file(), args.verbose)
+            verify_single_manifest(config['cfg_file'], source_global_manifest_repo, get_workspace_manifest_file(args), args.verbose)
         elif source_global_manifest_repo in user_cfg_manifest_repos:
-            verify_single_manifest(config['user_cfg_file'], source_global_manifest_repo, get_workspace_manifest_file(), args.verbose)
+            verify_single_manifest(config['user_cfg_file'], source_global_manifest_repo, get_workspace_manifest_file(args), args.verbose)
         else:
             global_manifest_directory = None
 
@@ -130,7 +135,7 @@ class SyncCommand(EdkrepoCommand):
             except EdkrepoException as e:
                 ui_functions.print_error_msg(e, header=True)
                 ui_functions.print_error_msg(humble.SYNC_MANIFEST_UPDATE_FAILED, header=True)
-        manifest = get_workspace_manifest()
+        manifest = get_workspace_manifest(args)
         if args.update_local_manifest:
             try:
                 repo_sources_to_sync = manifest.get_repo_sources(current_combo)

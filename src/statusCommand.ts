@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import path, * as syspath from 'path';
-import { runPythonScript } from './common';
+import { PythonScriptPath, logger, runPythonScript } from './common';
 import { stdout } from 'process';
 import { error } from 'console';
+import { start } from 'repl';
 
 
 
@@ -56,17 +57,16 @@ module.exports = function (context: vscode.ExtensionContext) {
                 }
             ).then(args => {
                 let command = ['status', uri.fsPath];
-                // var panel: vscode.WebviewPanel;
                 if (args !== undefined && args !== '') {
                     command = command.concat(args.split(' '));
-                    // for (let i=0; i<args.split(' ').length; i++)
-                    //     {if (args_list.indexOf(args.split(' ')[i]) === -1) {
-                    //         args_list.push(args.split(' ')[i]);
-                    //     }}
                 }
-                runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), command)
+                runPythonScript(PythonScriptPath, command, logger)
                 .then(stdout => {
-                    vscode.window.showInformationMessage(stdout);
+                    // const opc = vscode.window.createOutputChannel('status');
+                    // opc.clear();
+                    // opc.append(stdout);
+                    // opc.show();
+                    
                     panel.webview.html= getWebviewHtml(context, stdout);
                 })
                 .catch( error => {
@@ -118,7 +118,7 @@ function getWebviewHtml(context: vscode.ExtensionContext, content: string) {
         </body>
         </html>
         `
-    )
+    );
 }
 
 

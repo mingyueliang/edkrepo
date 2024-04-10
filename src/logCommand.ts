@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { runPythonScript } from './common';
+import { PythonScriptPath, logger, runPythonScript } from './common';
 import path from 'path';
 
 
@@ -35,9 +35,9 @@ module.exports = function(context: vscode.ExtensionContext) {
                     let args_list = args.split(' ');
                     command = command.concat(args_list);
                 }
-                runPythonScript(path.join(path.dirname(__dirname), 'edkrepoScripts/edkrepo/edkrepo_cli.py'), command)
-                .then(stdout => console.log(stdout))
-                .catch(stderr => console.log(stderr));
+                runPythonScript(PythonScriptPath, command, logger);
+                // .then(stdout => console.log(stdout))
+                // .catch(stderr => console.log(stderr));
             }
         );
     }));

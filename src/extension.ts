@@ -5,6 +5,7 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	require('./manifestCommand')(context);
 	require('./statusCommand')(context);
 	require('./cloneCommand')(context);
 	require('./comboCommand')(context);
@@ -12,8 +13,13 @@ export function activate(context: vscode.ExtensionContext) {
 	require('./resetCommand')(context);
 	require('./maintenanceCommand')(context);
 	require('./logCommand')(context);
-	// require('./updateCommand')(context);
 	require('./sparseCommand')(context);
+	require('./checkoutCommand')(context);
+	require('./listpinsCommand')(context);
+	require('./selfcheckCommand')(context);
+	require('./syncCommand')(context);
+	require('./UpdateManifestRepoCommand')(context);
+	require('./squashCommand')(context);
 }
 
 // This method is called when your extension is deactivated

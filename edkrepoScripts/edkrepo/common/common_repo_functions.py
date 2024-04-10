@@ -521,9 +521,9 @@ def combination_is_in_manifest(combination, manifest):
     return combination in combination_names
 
 
-def checkout(combination, global_manifest_path, verbose=False, override=False, log=None, cache_obj=None):
-    workspace_path = get_workspace_path()
-    manifest = get_workspace_manifest()
+def checkout(args, combination, global_manifest_path, verbose=False, override=False, log=None, cache_obj=None):
+    workspace_path = get_workspace_path(args)
+    manifest = get_workspace_manifest(args)
 
     # Create combo so we have original input and do not introduce any
     # unintended behavior by messing with parameters.
