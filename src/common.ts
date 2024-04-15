@@ -45,6 +45,7 @@ export async function callPythonScript(scriptPath: string, args: string[]) {
 export function runPythonScript(scriptPath: string, args: string[] = [], logger:vscode.OutputChannel) {
     return new Promise<string>((resolve, reject) => {
       logger.clear();
+      logger.show();
       const pythonProcess = spawn('python', [scriptPath, ...args]);
       let stdout = '';
       
@@ -52,7 +53,6 @@ export function runPythonScript(scriptPath: string, args: string[] = [], logger:
         stdout += data.toString();
         console.log(data.toString());
         logger.appendLine(data.toString().replace(/\u001b[^m]*?m/g, ""));
-        logger.show();
       });
    
       pythonProcess.stdout.on('end', () => {

@@ -1,16 +1,39 @@
-# edkrepo-plugin README
+# edkrepo plugin
+## Description
 
-This is the README for your extension "edkrepo-plugin". After writing up a brief description, we recommend including the following sections.
+EdkRepo is a Python based multiple repository workflow utility developed to simplify the usage and adoption of a multiple git repository workspace model such as the one used by FST for firmware development. EdkRepo reduces the complexity of development workflows while integrating seamlessly with Git, Gerrit/GitHub code review interfaces and continuous integration systems.
+
+Open source link: [edk2-edkrepo](https://github.com/tianocore/edk2-edkrepo)
+
+## Installation and Requirements
+### Requirements
+1. vscode: https://code.visualstudio.com/download
+2. node.js: https://nodejs.org/en/download/current
+3. python package
+    > pip install */requirements.txt 
+### Install from source code
+
+1. Clone project
+   > git clone https://github.com/mingyueliang/edkrepo.git
+2. Install Dependencies
+   > npm install
+3. Pack
+   > npm install vsce  
+   > cd projectName  
+   > vsce package
+4. Install 
+   > code --install-extension *.xsix
+### Install from .xsix
+- Download from Releases
+  link: [edkrepo 0.0.1](https://github.com/mingyueliang/edkrepo/releases)
+- Install
+  > code --install-extension *.xsix
 
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-For example if there is an image subfolder under your extension project workspace:
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 

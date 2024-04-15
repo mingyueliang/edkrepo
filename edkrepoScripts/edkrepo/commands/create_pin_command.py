@@ -42,21 +42,26 @@ class CreatePinCommand(EdkrepoCommand):
         metadata['arguments'] = args
         args.append({'name' : 'PinFileName',
                      'positional' : True,
-                     'position' : 0,
+                     'position' : 1,
                      'required' : True,
                      'help-text' : arguments.NAME_HELP})
         args.append({'name' : 'Description',
                      'positional' : True,
-                     'position' : 1,
+                     'position' : 2,
                      'required' : True,
                      'help-text' : arguments.DESCRIPTION_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         args.append(SourceManifestRepoArgument)
         return metadata
 
     def run_command(self, args, config):
 
-        workspace_path = get_workspace_path()
-        manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        manifest = get_workspace_manifest(args)
 
         # Set the pinname/path == to the file name provided.
         # If a relative paths is provided save the file relative to the current working directory.

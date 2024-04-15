@@ -53,10 +53,16 @@ class F2fCherryPickCommand(EdkrepoCommand):
         metadata['arguments'] = args
         args.append({'name' : 'commit-ish',
                      'positional' : True,
-                     'position' : 0,
+                     'position' : 1,
                      'required': False,
                      'description' : arguments.F2F_CHERRY_PICK_COMMIT_ISH_DESCRIPTION,
                      'help-text' : arguments.F2F_CHERRY_PICK_COMMIT_ISH_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
+
         args.append({'name': 'template',
                      'positional': False,
                      'required': False,
@@ -146,7 +152,7 @@ def _prep_new_cherry_pick(args, repo, commit_ish, config, cherry_pick_operations
     except EdkrepoWorkspaceInvalidException:
         workspace_path = None
     if workspace_path is not None:
-        manifest = get_workspace_manifest()
+        manifest = get_workspace_manifest(args)
         sparse_enabled = sparse_checkout_enabled(workspace_path, manifest.get_repo_sources(manifest.general_config.current_combo))
         if sparse_enabled:
             raise EdkrepoWorkspaceInvalidException(humble.F2F_CHERRY_PICK_NO_SPARSE)

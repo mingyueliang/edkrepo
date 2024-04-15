@@ -69,6 +69,7 @@ class ManifestRepos(EdkrepoCommand):
                      'position': 4,
                      'nargs' : 1,
                      'help-text': arguments.LOCAL_PATH_HELP})
+
         return metadata
 
     def run_command(self, args, config):

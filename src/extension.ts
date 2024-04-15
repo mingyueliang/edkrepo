@@ -20,6 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
 	require('./syncCommand')(context);
 	require('./UpdateManifestRepoCommand')(context);
 	require('./squashCommand')(context);
+	require('./cacheCommand')(context);
+	require('./checkoutPinCommand')(context);
+	require('./createPinCommand')(context);
+	require('./f2f-cherry-pickCommad')(context);
+	require('./list-reposCommand')(context);
+	require('./manifestReposCommand')(context);
 }
 
 // This method is called when your extension is deactivated

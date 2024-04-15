@@ -67,12 +67,18 @@ class CacheCommand(EdkrepoCommand):
                      'help-text': arguments.COMMAND_PATH_HELP})
         args.append({'name': 'project',
                      'positional': True,
+                     'position': 1,
                      'required': False,
                      'help-text': arguments.COMMAND_PROJECT_HELP})
         args.append({'name': 'selective',
                      'positional': False,
                      'required': False,
                      'help-text': arguments.SELECTIVE_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         args.append(SourceManifestRepoArgument)
         return metadata
 
@@ -109,7 +115,7 @@ class CacheCommand(EdkrepoCommand):
             manifest = _get_manifest(args.project, config, args.source_manifest_repo)
         else:
             try:
-                manifest = get_workspace_manifest()
+                manifest = get_workspace_manifest(args)
             except Exception:
                 pass
 

@@ -78,12 +78,28 @@
         "title": "edkrepo squash"
       },
       {
-        "command": "edkrepo.clone",
-        "title": "edkrepo clone"
+        "command": "edkrepo.menus.cache",
+        "title": "edkrepo cache"
       },
       {
-        "command": "edkrepo.manifest",
-        "title": "edkrepo manifest"
+        "command": "edkrepo.menus.checkout-pin",
+        "title": "edkrepo checkout-pin"
+      },
+      {
+        "command": "edkrepo.menus.create-pin",
+        "title": "edkrepo create-pin"
+      },
+      {
+        "command": "edkrepo.menus.cherry-pick",
+        "title": "edkrepo f2f-cherry-pick"
+      },
+      {
+        "command": "edkrepo.menus.list-repos",
+        "title": "edkrepo list-repos"
+      },
+      {
+        "command": "edkrepo.menus.manifest-repos",
+        "title": "edkrepo manifest-repos"
       }
     ],
     "submenus": [
@@ -95,12 +111,19 @@
     "menus": {
       "explorer/context": [
         {
+          "submenu": "edkrepoTool",
+          "group": "group",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "edkrepoTool": [
+        {
           "command": "edkrepo.menus.manifest",
           "group": "group1",
           "when": "explorerResourceIsFolder"
         },
         {
-          "command": "edkrepo.menus.clone",
+          "command": "edkrepo.menus.clone", 
           "group": "group1",
           "when": "explorerResourceIsFolder"
         },
@@ -169,19 +192,34 @@
           "when": "explorerResourceIsFolder"
         },
         {
-          "submenu": "edkrepoTool",
-          "group": "group",
+          "command": "edkrepo.menus.cache",
+          "group": "group2",
           "when": "explorerResourceIsFolder"
-        }
-      ],
-      "edkrepoTool": [
-        {
-          "command": "edkrepo.clone",
-          "group": "navigation"
         },
         {
-          "command": "edkrepo.manifest",
-          "group": "navigation"
+          "command": "edkrepo.menus.checkout-pin",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.create-pin",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.cherry-pick",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.list-repos",
+          "group": "group2",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "edkrepo.menus.manifest-repos",
+          "group": "group1",
+          "when": "explorerResourceIsFolder"
         }
       ]
     }

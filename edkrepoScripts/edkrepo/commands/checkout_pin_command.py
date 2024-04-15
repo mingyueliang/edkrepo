@@ -42,16 +42,21 @@ class CheckoutPinCommand(EdkrepoCommand):
         metadata['arguments'] = args
         args.append({'name' : 'pinfile',
                      'positional' : True,
-                     'position' : 0,
+                     'position' : 1,
                      'required' : True,
                      'help-text' : arguments.PIN_FILE_HELP})
+        args.append({'name': 'Workspace',
+                     'positional': True,
+                     'position': 0,
+                     'required': True,
+                     'help-text': ''})
         args.append(OverrideArgument)
         args.append(SourceManifestRepoArgument)
         return metadata
 
     def run_command(self, args, config):
-        workspace_path = get_workspace_path()
-        manifest = get_workspace_manifest()
+        workspace_path = get_workspace_path(args)
+        manifest = get_workspace_manifest(args)
 
         manifest_repo = find_source_manifest_repo(manifest, config['cfg_file'], config['user_cfg_file'], args.source_manifest_repo)
         cfg, user_cfg, conflicts = list_available_manifest_repos(config['cfg_file'], config['user_cfg_file'])
